@@ -1,0 +1,45 @@
+context:
+  name: bascom
+  version: "0.1.2"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: d58439c548433adcda98e695be53e526ba940a4b9c44fb9a05d92cd495cdd47f
+
+build:
+  noarch: python
+  script: python -m pip install . -vv
+  number: 0
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - poetry-core
+  run:
+    - python >=${{ python_min }}
+    - colorlog >=6.10.1,<7.0.0
+    - typing-extensions >=4.15.0,<5.0.0
+
+tests:
+  - python:
+      imports:
+      - bascom
+      pip_check: true
+      python_version: ${{ python_min }}.*
+
+about:
+  homepage: https://github.com/Tatsh/bascom
+  summary: 'Core library that my tools use.'
+  license: MIT
+  license_file: LICENSE.txt
+  documentation: https://tatsh.github.io/bascom
+  repository: https://github.com/Tatsh/bascom
+
+extra:
+  recipe-maintainers:
+    - Qualify5303
